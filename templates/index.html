@@ -1,20 +1,12 @@
 <html>
     <head>
         <title>Webcam</title>
-        <script type="text/javascript" src="/static/jquery.slim.min.js"></script>
-        <script type="text/javascript" src="/static/socket.io.min.js"></script>
-        <script type="text/javascript">
-            var socket = io.connect("http://"+document.domain+":"+location.port);
-            socket.on("connect", function(){
-                console.log("Connected:",socket.id)
-            });
-        </script>
     </head>
     <body>
         <h1>Last image:</h1>
         <img src="/images/last" style="border: 3px solid black"/>
         <br>
-        <a href="/r"><button>Reload</button></a>
-        <a href="/stream"><button>Stream</button></a>
+        <a href="/r"><button>Take photo</button></a>
+        <a href="/stream" target="blank"><button>Stream</button></a>
     </body>
 </html>

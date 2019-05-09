@@ -1,8 +1,8 @@
-from flask import Flask, render_template, request, send_from_directory, Response
+from flask import Flask, render_template, send_from_directory, Response
 # from flask_socketio import SocketIO
 from pathlib import Path
 from capture import capture_and_save
-from camera import Camera2 as Camera
+from camera import Camera
 
 camera = Camera()
 camera.run()
@@ -29,7 +29,8 @@ def entrypoint():
 
 @app.route("/r")
 def capture():
-    capture_and_save()
+    im = camera.get_frame(bytes=False)
+    capture_and_save(im)
     return render_template("send_to_init.html")
 
 @app.route("/images/last")

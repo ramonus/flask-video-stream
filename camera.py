@@ -1,23 +1,11 @@
 import cv2
 import threading
 import time
-class Camera:
-    def __init__(self):
-        self.vid = cv2.VideoCapture(0)
-        with open("images/not_found.jpeg","rb") as f:
-            self.nf = f.read()
-    def get_frame(self):
-        v,im = self.vid.read()
-        if v:
-            img = cv2.imencode(".png",im)[1].tobytes()
-            return img
-        else:
-            return self.nf
 
 thread = None
 
-class Camera2:
-    def __init__(self,fps=10,video_source=0):
+class Camera:
+    def __init__(self,fps=20,video_source=0):
         self.fps = fps
         self.video_source = video_source
         self.camera = cv2.VideoCapture(self.video_source)
@@ -44,9 +32,12 @@ class Camera2:
             time.sleep(dt)
     def stop(self):
         self.isrunning = False
-    def get_frame(self):
+    def get_frame(self, bytes=True):
         if len(self.frames)>0:
-            img = cv2.imencode('.png',self.frames[-1])[1].tobytes()
+            if bytes:
+                img = cv2.imencode('.png',self.frames[-1])[1].tobytes()
+            else:
+                img = self.frames[-1]
         else:
             with open("images/not_found.jpeg","rb") as f:
                 img = f.read()
