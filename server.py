@@ -1,13 +1,15 @@
 from flask import Flask, render_template, request, send_from_directory, Response
-from flask_socketio import SocketIO
+# from flask_socketio import SocketIO
 from pathlib import Path
 from capture import capture_and_save
-from camera import Camera
+from camera import Camera2 as Camera
 
+camera = Camera()
+camera.run()
 
 app = Flask(__name__)
 # app.config["SECRET_KEY"] = "secret!"
-socketio = SocketIO(app)
+# socketio = SocketIO(app)
 
 @app.after_request
 def add_header(r):
@@ -53,8 +55,9 @@ def stream_page():
 
 @app.route("/video_feed")
 def video_feed():
-    return Response(gen(Camera()),
+    return Response(gen(camera),
         mimetype="multipart/x-mixed-replace; boundary=frame")
 
 if __name__=="__main__":
-    socketio.run(app,host="0.0.0.0",port="3005")
+    # socketio.run(app,host="0.0.0.0",port="3005",threaded=True)
+    app.run(host="0.0.0.0",port="3005")
