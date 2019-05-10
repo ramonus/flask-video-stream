@@ -3,6 +3,7 @@ from flask import Flask, render_template, send_from_directory, Response
 from pathlib import Path
 from capture import capture_and_save
 from camera import Camera
+import argparse
 
 camera = Camera()
 camera.run()
@@ -61,4 +62,8 @@ def video_feed():
 
 if __name__=="__main__":
     # socketio.run(app,host="0.0.0.0",port="3005",threaded=True)
-    app.run(host="0.0.0.0",port="3005")
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-p','--port',type=int,default=5000, help="Running port")
+    parser.add_argument("-H","--host",type=str,default='0.0.0.0', help="Address to broadcast")
+    args = parser.parse_args()
+    app.run(host=args.host,port=args.port)
