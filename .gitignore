@@ -1,3 +1,4 @@
 __pycache__
 images/*
 !images/not_found.jpeg
+logs/
