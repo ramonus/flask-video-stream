@@ -16,7 +16,7 @@ class Camera:
     def run(self):
         global thread
         if thread is None:
-            thread = threading.Thread(target=self._capture_loop)
+            thread = threading.Thread(target=self._capture_loop,daemon=True)
             print("Starting thread...")
             thread.start()
             self.isrunning = True
